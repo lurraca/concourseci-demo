@@ -1,0 +1,24 @@
+resources:
+- name: demo-repo
+  type: git
+  source:
+    uri: https://github.com/lurraca/concourseci-demo
+    branch: master
+
+jobs:
+  - name: unit-tests
+    plan:
+    - get: demo-repo
+      trigger: true
+    - task: run-tests
+      config:
+        platform: linux
+        image_resource:
+          type: docker-image
+          source:
+            repository: java
+            tag: "8"
+        inputs:
+        - name: demo-repo
+        run:
+          path: demo-repo/run-test.sh

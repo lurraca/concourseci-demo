@@ -5,17 +5,27 @@ resources:
     uri: https://github.com/lurraca/concourseci-demo
     branch: master
 
+- name: deploy
+  type: cf
+  source:
+    api: http://run.pivotal.io
+
+
 jobs:
   - name: unit-tests
     plan:
     - get: demo-repo
       trigger: true
+    - put: deploy
     - task: run-tests
       config:
         platform: linux
         image_resource:
           type: docker-image
-          source: {repository: ubuntu}
+          source:
+            repository: java
+            tag: "8"
+        inputs:
+        - name: demo-repo
         run:
-          path: echo
-          args: ["Hello!"]
+          path: demo-repo/run-test.sh
