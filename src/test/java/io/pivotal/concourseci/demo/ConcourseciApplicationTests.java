@@ -13,7 +13,7 @@ public class ConcourseciApplicationTests {
 
 	@Test
 	public void contextLoads() {
-		assertTrue(true);
+		assertTrue(false);
 	}
 
 }
